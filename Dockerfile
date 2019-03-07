@@ -9,9 +9,9 @@ RUN apk -U add \
         openssl-dev \
         python-dev \
         curl ca-certificates \
-     && update-ca-certificates \
-     && pip install scrapy
-     && rm -rf /var/cache/apk/*
+    && update-ca-certificates \
+    && pip install scrapy \
+    && rm -rf /var/cache/apk/*
 
 COPY run.sh /
 COPY scraper.py /
