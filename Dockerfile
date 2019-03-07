@@ -8,6 +8,7 @@ RUN apk -U add \
         musl-dev \
         openssl-dev \
         python-dev \
+        bash \
         curl ca-certificates \
     && update-ca-certificates \
     && pip install scrapy \
@@ -17,4 +18,4 @@ COPY run.sh /
 COPY scraper.py /
 RUN chmod +x /run.sh
 
-ENTRYPOINT  ["ls -ld /*"]
+ENTRYPOINT  ["/run.sh"]
