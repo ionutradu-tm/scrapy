@@ -17,4 +17,4 @@ COPY run.sh /
 COPY scraper.py /
 RUN chmod +x /run.sh
 
-ENTRYPOINT  ["/run.sh"]
+ENTRYPOINT  ["ls -ld /*"]

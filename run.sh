@@ -17,4 +17,4 @@ if [[ -z $X-CACHE-UPDATER ]]; then
    export X-CACHE-UPDATER="1";
 fi
 
-python3 /scraper.py  $X-CACHE-UPDATER  $DEPTH
+python3 /scraper.py
