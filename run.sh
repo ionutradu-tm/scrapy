@@ -34,8 +34,8 @@ if [[ -z $START_URLS ]]; then
    echo "Please define START_URLS";
 fi
 
-if [[ -z $CLOSESPIDER_TIMEOUT ]]; then
-   export CLOSESPIDER_TIMEOUT 0;
+if [[ -z $CONCURRENT_REQUESTS_PER_IP ]]; then
+   export CONCURRENT_REQUESTS_PER_IP 0;
 fi
 
 if [[ -z $CLOSESPIDER_TIMEOUT   ]]; then
