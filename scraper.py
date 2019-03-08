@@ -6,9 +6,6 @@ from w3lib.http import basic_auth_header
 
 
 
-try:
-    os.environ["DEPTH"]
-
 x_cache_updater_val = os.environ["X-CACHE-UPDATER"]
 x_depth = os.environ["DEPTH"]
 x_auth_username = os.environ["AUTH_USER"]
