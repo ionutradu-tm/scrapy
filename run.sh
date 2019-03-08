@@ -30,10 +30,6 @@ if [[ -z $START_URLS ]]; then
    exit 1;
 fi
 
-if [[ -z $START_URLS ]]; then
-   echo "Please define START_URLS";
-fi
-
 if [[ -z $CONCURRENT_REQUESTS_PER_IP ]]; then
    export CONCURRENT_REQUESTS_PER_IP 0;
 fi
