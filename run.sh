@@ -17,4 +17,29 @@ if [[ -z $X-CACHE-UPDATER ]]; then
    export X-CACHE-UPDATER="1";
 fi
 
+if [[ -z $AUTH_USER ]]; then
+   export AUTH_USER="admin";
+fi
+
+if [[ -z $AUTH_PASSWORD ]]; then
+   export AUTH_PASSWORD="password";
+fi
+
+if [[ -z $START_URLS ]]; then
+   echo "Please define START_URLS";
+   exit 1;
+fi
+
+if [[ -z $START_URLS ]]; then
+   echo "Please define START_URLS";
+fi
+
+if [[ -z $CLOSESPIDER_TIMEOUT ]]; then
+   export CLOSESPIDER_TIMEOUT 0;
+fi
+
+if [[ -z $CLOSESPIDER_TIMEOUT   ]]; then
+   export  CLOSESPIDER_TIMEOUT 0;
+fi
+
 python3 /scraper.py

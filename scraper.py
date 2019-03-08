@@ -11,6 +11,9 @@ x_depth = os.environ["DEPTH"]
 x_auth_username = os.environ["AUTH_USER"]
 x_auth_password = os.environ["AUTH_PASSWORD"]
 x_start_urls = os.environ["START_URLS"]
+x_concurrent_requests_per_ip = os.environ["CONCURRENT_REQUESTS_PER_IP"]
+x_closespider_timeout = os.environ["CLOSESPIDER_TIMEOUT"]
+
 print('X-CACHE-UPDATER value is ' + x_cache_updater_val)
 print('DEPTH_LIMIT value is ' + x_depth)
 
@@ -20,6 +23,8 @@ class Scraper(scrapy.Spider):
     name = "Scraper"
     custom_settings = {
         'DEPTH_LIMIT': x_depth,
+        "CONCURRENT_REQUESTS_PER_IP": x_concurrent_requests_per_ip,
+        "CLOSESPIDER_TIMEOUT": x_closespider_timeout,
     }
     start_urls = [
         x_start_urls,
