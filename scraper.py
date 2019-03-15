@@ -23,6 +23,7 @@ class Scraper(scrapy.Spider):
     name = "Scraper"
     custom_settings = {
         'DEPTH_LIMIT': x_depth,
+        "DEPTH_STATS_VERBOSE": "true",
         "CONCURRENT_REQUESTS_PER_IP": x_concurrent_requests_per_ip,
         "CLOSESPIDER_TIMEOUT": x_closespider_timeout,
     }
