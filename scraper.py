@@ -32,7 +32,7 @@ class Scraper(scrapy.Spider):
 
     def start_requests(self):
         for url in self.start_urls:
-            yield scrapy.Request(url, headers={'Authorization': basic_auth})
+            yield scrapy.Request(url, headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse(self, response):
         print('Processing page content for ' + response.url + '....')
