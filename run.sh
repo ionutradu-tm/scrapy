@@ -13,8 +13,8 @@ if [[ -z $DEPTH ]]; then
    export DEPTH="2";
 fi
 
-if [[ -z $X-CACHE-UPDATER ]]; then
-   export X-CACHE-UPDATER="1";
+if [[ -z $X_CACHE_UPDATER ]]; then
+   export X_CACHE_UPDATER="1";
 fi
 
 if [[ -z $AUTH_USER ]]; then
