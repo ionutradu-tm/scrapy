@@ -38,36 +38,64 @@ class Scraper(scrapy.Spider):
     def parse(self, response):
         print('Processing page content for ' + response.url + '....')
 
-        for next_page in response.css('.nav-products a'):
-            yield response.follow(next_page, self.parse, 'GET',
+        for next_page in response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract():
+            yield response.follow(next_page, self.parse_category, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
-        for next_page in response.css('.facet-input-class-anchor'):
-            yield response.follow(next_page, self.parse, 'GET',
-                          headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+#        for next_page in response.css('.facet-input-class-anchor'):
+#            yield response.follow(next_page, self.parse, 'GET',
+#                          headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+#
+#        for next_page in response.css('.tealium-clickOnProduct'):
+#            yield response.follow(next_page, self.parse, 'GET',
+#                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+#
+#        for next_page in response.css('.product-thumb'):
+#            yield response.follow(next_page, self.parse, 'GET',
+#                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+#
+#        for next_page in response.css('.megamenu-list-lnk'):
+#            yield response.follow(next_page, self.parse, 'GET',
+#                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+#
+#        for next_page in response.css('.product-wrapper > a'):
+#            yield response.follow(next_page, self.parse, 'GET',
+#                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+#
+#        for next_page in response.css('.tealium-skuLinkPgroup'):
+#            yield response.follow(next_page, self.parse, 'GET',
+#                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+#
+#        print('Done processing page content for ' + response.url + '.')
 
-        for next_page in response.css('.tealium-clickOnProduct'):
-            yield response.follow(next_page, self.parse, 'GET',
+    def parse_category (self, response):
+        print('Processing cateogry content for ' + response.url + '....')
+        for next_page in response.xpath('//ul[@class="row category-items-list"]/li/a/@href').extract():
+           yield response.follow(next_page, self.parse_subcategory, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
-        for next_page in response.css('.product-thumb'):
-            yield response.follow(next_page, self.parse, 'GET',
+    def parse_subcategory (self, response):
+        print('Processing subcateogry content for ' + response.url + '....')
+        for next_page in response.xpath('//div[@class="shop-products"]/div/a/@href').extract():
+           yield response.follow(next_page, self.parse_product, 'GET',
+                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+        for next_page in response.xpath('//a[@class="icon-angle-right"]/@href').extract():
+           print('Next Page:', next_page);
+           yield response.follow(next_page, self.parse_subcategory, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
-        for next_page in response.css('.megamenu-list-lnk'):
-            yield response.follow(next_page, self.parse, 'GET',
+    def parse_product (self, response):
+        print('Processing product content for ' + response.url + '....')
+        for next_page in response.xpath('//tr[@class="basic-info"]/td/a/@href').extract():
+           yield response.follow(next_page, self.parse_item, 'GET',
+                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+        for next_page in response.xpath('//a[@class="icon-angle-right"]/@href').extract():
+           print('Next Page:', next_page);
+           yield response.follow(next_page, self.parse_product, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
-        for next_page in response.css('.product-wrapper > a'):
-            yield response.follow(next_page, self.parse, 'GET',
-                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-
-        for next_page in response.css('.tealium-skuLinkPgroup'):
-            yield response.follow(next_page, self.parse, 'GET',
-                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-
-        print('Done processing page content for ' + response.url + '.')
-
+    def parse_item (self, response):
+        print('Processing item content for ' + response.url + '....')
 
 basic_auth = basic_auth_header(x_auth_username, x_auth_password)
 
