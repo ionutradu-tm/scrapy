@@ -69,13 +69,13 @@ class Scraper(scrapy.Spider):
 #        print('Done processing page content for ' + response.url + '.')
 
     def parse_category (self, response):
-        print('Processing cateogry content for ' + response.url + '....')
+        print('Processing category content for ' + response.url + '....')
         for next_page in response.xpath('//ul[@class="row category-items-list"]/li/a/@href').extract():
            yield response.follow(next_page, self.parse_subcategory, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_subcategory (self, response):
-        print('Processing subcateogry content for ' + response.url + '....')
+        print('Processing subcategory content for ' + response.url + '....')
         for next_page in response.xpath('//div[@class="shop-products"]/div/a/@href').extract():
            yield response.follow(next_page, self.parse_product, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
