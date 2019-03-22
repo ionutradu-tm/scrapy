@@ -17,6 +17,10 @@ if [[ -z $X_CACHE_UPDATER ]]; then
    export X_CACHE_UPDATER="1";
 fi
 
+if [[ -z $LOCALE ]]; then
+   export LOCALE="";
+fi
+
 if [[ -z $AUTH_USER ]]; then
    export AUTH_USER="admin";
 fi
