@@ -35,9 +35,7 @@ class Scraper(scrapy.Spider):
         "CONCURRENT_REQUESTS_PER_IP": x_concurrent_requests_per_ip,
         "CLOSESPIDER_TIMEOUT": x_closespider_timeout,
     }
-    start_urls = [
-        x_start_urls,
-    ]
+    start_urls = x_start_urls
 
     def start_requests(self):
         for url in self.start_urls:
