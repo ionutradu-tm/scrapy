@@ -25,6 +25,7 @@ for i in x_urls_list:
     for j in x_locale_list:
           new = i + j
           x_start_urls.append(new)
+print(x_start_urls)
 
 class Scraper(scrapy.Spider):
     name = "Scraper"
