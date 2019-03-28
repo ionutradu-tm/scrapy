@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ -z $MAILFROM ]] || [[ -z $SMTP_HOST ]] || [[ -z SMTP_PORT ]] || [[ -z $SMTP_TO ]] || [[ -z $SMTP_SUBJECT ]];
+   then
+       export SEND_EMAIL=0
+   else
+       export SEND_EMAIL=1
+fi
 
 if [[ -n $HOSTNAME ]] && [[ -n $IP ]]; then
    echo "$IP $HOSTNAME" >> /etc/hosts

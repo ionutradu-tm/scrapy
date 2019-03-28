@@ -1,8 +1,10 @@
 import scrapy
 import sys
 import os
+import pprint
 from scrapy.crawler import CrawlerProcess
 from w3lib.http import basic_auth_header
+from scrapy.mail import MailSender
 
 
 
@@ -14,6 +16,7 @@ x_urls = os.environ["START_URLS"]
 x_locale = os.environ["LOCALE"]
 x_concurrent_requests_per_ip = os.environ["CONCURRENT_REQUESTS_PER_IP"]
 x_closespider_timeout = os.environ["CLOSESPIDER_TIMEOUT"]
+x_smtp_send_mail = int(os.environ["SEND_EMAIL"])
 
 print('X-CACHE-UPDATER value is ' + x_cache_updater_val)
 print('DEPTH_LIMIT value is ' + x_depth)
@@ -47,6 +50,17 @@ class Scraper(scrapy.Spider):
         for next_page in response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract():
             yield response.follow(next_page, self.parse_category, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+        if x_smtp_send_mail:
+            body = self.crawler.stats.get_stats()
+            body = pprint.pformat(body)
+            x_mailfrom = os.environ["MAILFROM"]
+            x_smtp_host = os.environ["SMTP_HOST"]
+            x_smtp_port = int(os.environ["SMTP_PORT"])
+            x_smtp_to = os.environ["SMTP_TO"]
+            x_smtp_subject = os.environ["SMTP_SUBJECT"]
+            x_smtp_to_list = x_smtp_to.split(',')
+            mailer = MailSender(mailfrom=x_mailfrom, smtphost=x_smtp_host, smtpport=x_smtp_port)
+            mailer.send(to=x_smtp_to_list, subject=x_smtp_subject, body=body)
 
 #        for next_page in response.css('.facet-input-class-anchor'):
 #            yield response.follow(next_page, self.parse, 'GET',
