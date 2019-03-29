@@ -2,9 +2,11 @@ import scrapy
 import sys
 import os
 import pprint
+import smtplib
+from email.message import EmailMessage
 from scrapy.crawler import CrawlerProcess
 from w3lib.http import basic_auth_header
-from scrapy.mail import MailSender
+
 
 
 
@@ -50,43 +52,6 @@ class Scraper(scrapy.Spider):
         for next_page in response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract():
             yield response.follow(next_page, self.parse_category, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-        if x_smtp_send_mail:
-            body = self.crawler.stats.get_stats()
-            body = pprint.pformat(body)
-            x_mailfrom = os.environ["MAILFROM"]
-            x_smtp_host = os.environ["SMTP_HOST"]
-            x_smtp_port = int(os.environ["SMTP_PORT"])
-            x_smtp_to = os.environ["SMTP_TO"]
-            x_smtp_subject = os.environ["SMTP_SUBJECT"]
-            x_smtp_to_list = x_smtp_to.split(',')
-            mailer = MailSender(mailfrom=x_mailfrom, smtphost=x_smtp_host, smtpport=x_smtp_port)
-            mailer.send(to=x_smtp_to_list, subject=x_smtp_subject, body=body)
-
-#        for next_page in response.css('.facet-input-class-anchor'):
-#            yield response.follow(next_page, self.parse, 'GET',
-#                          headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-#
-#        for next_page in response.css('.tealium-clickOnProduct'):
-#            yield response.follow(next_page, self.parse, 'GET',
-#                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-#
-#        for next_page in response.css('.product-thumb'):
-#            yield response.follow(next_page, self.parse, 'GET',
-#                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-#
-#        for next_page in response.css('.megamenu-list-lnk'):
-#            yield response.follow(next_page, self.parse, 'GET',
-#                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-#
-#        for next_page in response.css('.product-wrapper > a'):
-#            yield response.follow(next_page, self.parse, 'GET',
-#                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-#
-#        for next_page in response.css('.tealium-skuLinkPgroup'):
-#            yield response.follow(next_page, self.parse, 'GET',
-#                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-#
-#        print('Done processing page content for ' + response.url + '.')
 
     def parse_category (self, response):
         print('Processing category content for ' + response.url + '....')
@@ -116,6 +81,32 @@ class Scraper(scrapy.Spider):
 
     def parse_item (self, response):
         print('Processing item content for ' + response.url + '....')
+
+    @classmethod
+    def from_crawler(cls, crawler, *args, **kwargs):
+        spider = super(Scraper, cls).from_crawler(crawler, *args, **kwargs)
+        crawler.signals.connect(spider.spider_closed, signals.spider_closed)
+        return spider
+
+    def spider_closed(self, spider):
+        print('Finished')
+        if x_smtp_send_mail:
+            body = self.crawler.stats.get_stats()
+            body = pprint.pformat(body)
+            x_mailfrom = os.environ["MAILFROM"]
+            x_smtp_host = os.environ["SMTP_HOST"]
+            x_smtp_port = int(os.environ["SMTP_PORT"])
+            x_smtp_to = os.environ["SMTP_TO"]
+            x_smtp_subject = os.environ["SMTP_SUBJECT"]
+            x_smtp_to_list = x_smtp_to.split(',')
+            smtp_server = smtplib.SMTP(x_smtp_host, x_smtp_port)
+            msg = EmailMessage()
+            msg['Subject'] = x_smtp_subject
+            msg['From'] = x_mailfrom
+            msg['To'] = x_smtp_to_list
+            msg.set_content(body)
+            smtp_server.send_message(msg)
+            smtp_server.quit()
 
 basic_auth = basic_auth_header(x_auth_username, x_auth_password)
 
