@@ -6,6 +6,7 @@ import smtplib
 from email.message import EmailMessage
 from scrapy.crawler import CrawlerProcess
 from w3lib.http import basic_auth_header
+from scrapy import signals
 
 
 
