@@ -20,6 +20,7 @@ x_locale = os.environ["LOCALE"]
 x_concurrent_requests_per_ip = os.environ["CONCURRENT_REQUESTS_PER_IP"]
 x_closespider_timeout = os.environ["CLOSESPIDER_TIMEOUT"]
 x_smtp_send_mail = int(os.environ["SEND_EMAIL"])
+x_start_pages_only = os.environ["START_PAGES_ONLY"]
 
 print('X-CACHE-UPDATER value is ' + x_cache_updater_val)
 print('DEPTH_LIMIT value is ' + x_depth)
@@ -49,9 +50,9 @@ class Scraper(scrapy.Spider):
 
     def parse(self, response):
         print('Processing page content for ' + response.url + '....')
-
-        for next_page in response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract():
-            yield response.follow(next_page, self.parse_category, 'GET',
+        if x_start_pages_only != "yes":
+           for next_page in response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract():
+               yield response.follow(next_page, self.parse_category, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_category (self, response):

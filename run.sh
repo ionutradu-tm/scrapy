@@ -15,6 +15,10 @@ if [[ -z $DEPTH ]]; then
    export DEPTH="2";
 fi
 
+if [[ -z $START_PAGES_ONLY ]]; then
+   export START_PAGES_ONLY="no";
+fi
+
 if [[ -z $DEPTH ]]; then
    export DEPTH="2";
 fi
