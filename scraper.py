@@ -41,6 +41,7 @@ class Scraper(scrapy.Spider):
         "DEPTH_STATS_VERBOSE": "true",
         "CONCURRENT_REQUESTS_PER_IP": x_concurrent_requests_per_ip,
         "CLOSESPIDER_TIMEOUT": x_closespider_timeout,
+        "LOG_LEVEL": 'INFO',
     }
     start_urls = x_start_urls
 
