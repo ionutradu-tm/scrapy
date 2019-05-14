@@ -125,7 +125,7 @@ class Scraper(scrapy.Spider):
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_shop_2 (self, response):
-        print('Processing level 2 for ' + response.url + '....')
+        print('Processing shop page level 2 for ' + response.url + '....')
         for next_page in response.xpath('//div[contains(concat(" ",@class," "), " table-filter filter-panel js-filter-panel-shop ")][2]/div/ul[contains(concat(" ",@class," "), " filter-option-list ")]/li/a[contains(@href,"/s/")]/@href').extract():
             yield response.follow(next_page, self.parse_shop_3, 'GET',
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
@@ -133,7 +133,7 @@ class Scraper(scrapy.Spider):
                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_shop_3 (self, response):
-        print('Processing level 3 for ' + response.url + '....')
+        print('Processing shop page level 3 for ' + response.url + '....')
         for next_page in response.xpath('//div[contains(concat(" ",@class," "), " table-filter filter-panel js-filter-panel-shop ")][3]/div/ul[contains(concat(" ",@class," "), " filter-option-list ")]/li/a[contains(@href,"/s/")]/@href').extract():
             yield response.follow(next_page, self.parse_shop_4, 'GET',
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
@@ -141,7 +141,7 @@ class Scraper(scrapy.Spider):
                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_shop_4 (self, response):
-        print('Processing level 4 for ' + response.url + '....')
+        print('Processing shop page level 4 for ' + response.url + '....')
         for next_page in response.xpath('//div[contains(concat(" ",@class," "), " table-filter filter-panel js-filter-panel-shop ")][4]/div/ul[contains(concat(" ",@class," "), " filter-option-list ")]/li/a[contains(@href,"/s/")]/@href').extract():
             yield response.follow(next_page, self.parse_shop_5, 'GET',
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
@@ -149,7 +149,7 @@ class Scraper(scrapy.Spider):
                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_shop_5 (self, response):
-        print('Processing level 5 for ' + response.url + '....')
+        print('Processing shop page level 5 for ' + response.url + '....')
         for next_page in response.xpath('//div[contains(concat(" ",@class," "), " table-filter filter-panel js-filter-panel-shop ")][5]/div/ul[contains(concat(" ",@class," "), " filter-option-list ")]/li/a[contains(@href,"/s/")]/@href').extract():
             yield response.follow(next_page, self.parse_shop_6, 'GET',
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
@@ -157,7 +157,7 @@ class Scraper(scrapy.Spider):
                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_shop_6 (self, response):
-        print('Processing level 6 for ' + response.url + '....')
+        print('Processing shop page level 6 for ' + response.url + '....')
         for next_page in response.xpath('//div[contains(concat(" ",@class," "), " table-filter filter-panel js-filter-panel-shop ")][6]/div/ul[contains(concat(" ",@class," "), " filter-option-list ")]/li/a[contains(@href,"/s/")]/@href').extract():
             yield response.follow(next_page, self.parse_shop_7, 'GET',
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
@@ -165,7 +165,7 @@ class Scraper(scrapy.Spider):
                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_shop_7 (self, response):
-        print('Processing level 7 for ' + response.url + '....')
+        print('Processing shop page level 7 for ' + response.url + '....')
         for next_page in response.xpath('//div[contains(concat(" ",@class," "), " table-filter filter-panel js-filter-panel-shop ")][7]/div/ul[contains(concat(" ",@class," "), " filter-option-list ")]/li/a[contains(@href,"/s/")]/@href').extract():
             yield response.follow(next_page, self.parse_shop_8, 'GET',
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
@@ -173,7 +173,7 @@ class Scraper(scrapy.Spider):
                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_shop_8 (self, response):
-        print('Processing level 8 for ' + response.url + '....')
+        print('Processing shop page level 8 for ' + response.url + '....')
         for next_page in response.xpath('//div[contains(concat(" ",@class," "), " table-filter filter-panel js-filter-panel-shop ")][8]/div/ul[contains(concat(" ",@class," "), " filter-option-list ")]/li/a[contains(@href,"/s/")]/@href').extract():
             yield response.follow(next_page, self.parse_shop_9, 'GET',
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
@@ -181,7 +181,7 @@ class Scraper(scrapy.Spider):
                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_shop_9 (self, response):
-        print('Processing level 9 for ' + response.url + '....')
+        print('Processing shop page level 9 for ' + response.url + '....')
         for next_page in response.xpath('//div[contains(concat(" ",@class," "), " table-filter filter-panel js-filter-panel-shop ")][9]/div/ul[contains(concat(" ",@class," "), " filter-option-list ")]/li/a[contains(@href,"/s/")]/@href').extract():
             yield response.follow(next_page, self.parse_shop_10, 'GET',
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
@@ -189,7 +189,7 @@ class Scraper(scrapy.Spider):
                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_shop_10 (self, response):
-        print('Processing shop level 10 for ' + response.url + '....')
+        print('Processing shop page level 10 for ' + response.url + '....')
 
 # end shop page
 
