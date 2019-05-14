@@ -54,6 +54,7 @@ class Scraper(scrapy.Spider):
         print('Processing page content for ' + response.url + '....')
 # run for sku or shop page
         if x_start_pages_only != "yes":
+            print('RUN_SHOP:' + x_run_shop)
             if x_run_shop == "no":
                 for next_page in response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract():
                     yield response.follow(next_page, self.parse_category, 'GET',
