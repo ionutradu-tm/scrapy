@@ -52,4 +52,5 @@ if [[ -z $CLOSESPIDER_TIMEOUT   ]]; then
    export  CLOSESPIDER_TIMEOUT 0;
 fi
 
+RUN_SHOP="${RUN_SHOP:-no}"
 python3 /scraper.py
