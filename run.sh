@@ -53,4 +53,5 @@ if [[ -z $CLOSESPIDER_TIMEOUT   ]]; then
 fi
 
 RUN_SHOP="${RUN_SHOP:-no}"
+DEBUG_LEVEL="${DEBUG_LEVEL:-DEBUG}"
 python3 /scraper.py

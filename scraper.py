@@ -23,6 +23,7 @@ x_closespider_timeout = os.environ["CLOSESPIDER_TIMEOUT"]
 x_smtp_send_mail = int(os.environ["SEND_EMAIL"])
 x_start_pages_only = os.environ["START_PAGES_ONLY"]
 x_run_shop = os.environ["RUN_SHOP"]
+x_debug_level = os.environ["DEBUG_LEVEL"]
 
 print('X-CACHE-UPDATER value is ' + x_cache_updater_val)
 print('DEPTH_LIMIT value is ' + x_depth)
@@ -43,7 +44,7 @@ class Scraper(scrapy.Spider):
         "DEPTH_STATS_VERBOSE": "true",
         "CONCURRENT_REQUESTS_PER_IP": x_concurrent_requests_per_ip,
         "CLOSESPIDER_TIMEOUT": x_closespider_timeout,
-        "LOG_LEVEL": 'INFO',
+        "LOG_LEVEL": x_debug_level,
     }
     start_urls = x_start_urls
 
