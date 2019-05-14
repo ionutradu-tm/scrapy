@@ -7,7 +7,8 @@ from email.message import EmailMessage
 from scrapy.crawler import CrawlerProcess
 from w3lib.http import basic_auth_header
 from scrapy import signals
-
+import itertools
+from datetime import timedelta
 
 
 
@@ -52,7 +53,7 @@ class Scraper(scrapy.Spider):
 
     def parse(self, response):
         print('Processing page content for ' + response.url + '....')
-# run for sku or shop page
+        # run for sku or shop page
         if x_start_pages_only != "yes":
             print('RUN_SHOP:' + x_run_shop)
             if x_run_shop == "no":
@@ -66,7 +67,7 @@ class Scraper(scrapy.Spider):
 
 
 
-# start sku page
+    # start sku page
     def parse_category (self, response):
         print('Processing category content for ' + response.url + '....')
         if x_run_shop == "no":
@@ -101,9 +102,9 @@ class Scraper(scrapy.Spider):
 
     def parse_item (self, response):
         print('Processing item content for ' + response.url + '....')
-# end sku page
+    # end sku page
 
-# shop page
+    # shop page
     def parse_shop_product_set(self, response):
         print('Processing shop page product set for ' + response.url + '....')
         product_set = []
