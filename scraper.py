@@ -54,20 +54,27 @@ class Scraper(scrapy.Spider):
         print('Processing page content for ' + response.url + '....')
 # run for sku or shop page
         if x_start_pages_only != "yes":
-           for next_page in response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract():
-               yield response.follow(next_page, self.parse_category, 'GET',
+            if x_run_shop == "no":
+                for next_page in response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract():
+                    yield response.follow(next_page, self.parse_category, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-        else:
-            for next_page in response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract():
-                yield response.follow(next_page[0], self.parse_shop_product_set, 'GET',
+            else:
+                next_page = response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract()
+                yield response.follow(next_page[0], self.parse_category, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
-# star sku page
+
+
+# start sku page
     def parse_category (self, response):
         print('Processing category content for ' + response.url + '....')
-        if x_run_shop  == "no":
+        if x_run_shop == "no":
             for next_page in response.xpath('//ul[@class="row category-items-list"]/li/a/@href').extract():
-               yield response.follow(next_page, self.parse_subcategory, 'GET',
+                yield response.follow(next_page, self.parse_subcategory, 'GET',
+                                  headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+        else:
+            next_page = response.xpath('//ul[@class="row category-items-list"]/li/a/@href').extract()
+            yield response.follow(next_page[0], self.parse_shop_product_set, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
 
