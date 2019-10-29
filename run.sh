@@ -54,5 +54,5 @@ fi
 
 export RUN_SHOP="${RUN_SHOP:-no}"
 export DEBUG_LEVEL="${DEBUG_LEVEL:-DEBUG}"
-#python3 /scraper.py
-echo "Do no start"
+python3 /scraper.py
+
