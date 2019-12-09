@@ -62,8 +62,8 @@ class Scraper(scrapy.Spider):
                     yield response.follow(next_page, self.parse_category, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
             else:
-                for next_page in response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract():
-                    yield response.follow(next_page[0], self.parse_category, 'GET',
+                next_page = response.xpath('//nav[@class="nav nav-products"]/ul/li/a/@href').extract()
+                yield response.follow(next_page[0], self.parse_category, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
 
