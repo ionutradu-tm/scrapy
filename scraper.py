@@ -124,8 +124,8 @@ class Scraper(scrapy.Spider):
             # print('Full URL:', full_url)
             yield response.follow(full_url, self.parse_shop_2, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-        //yield response.follow(full_url, self.parse_shop_3, 'GET',
-        //                         headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+        #yield response.follow(full_url, self.parse_shop_3, 'GET',
+        #                         headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_shop_2 (self, response):
         print('Processing shop page level 2 for ' + response.url + '....')
