@@ -87,7 +87,7 @@ class Scraper(scrapy.Spider):
 
     def parse_subcategory (self, response):
         print('Processing subcategory content for ' + response.url + '....')
-        for next_page in response.xpath('//div[@class="shop-products"]/div/a/@href').extract():
+        for next_page in response.xpath('//div[@class="shop-products"]/div/div/a/@href').extract():
            yield response.follow(next_page, self.parse_product, 'GET',
                                   headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
         for next_page in response.xpath('//a[@class="icon-angle-right"]/@href').extract():
