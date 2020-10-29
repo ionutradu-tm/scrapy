@@ -115,8 +115,7 @@ class Scraper(scrapy.Spider):
         product_set = []
         product_set.append(response.url.split("/")[-1])
         URL = response.url.rsplit("/", 1)[0]
-        for next_page in response.xpath(
-                '//div[contains(concat(" ",@class," "), " table-filter filter-panel js-filter-panel-shop ")][1]/div/ul[contains(concat(" ",@class," "), " filter-option-list ")]/li/a[contains(@href,"/s/")]/@href').extract():
+        for next_page in response.xpath('//div[contains(concat(" ",@class," "), " table-filter filter-panel js-filter-panel-shop ")]/div/ul[contains(concat(" ",@class," "), " filter-option-list ")]/li/a[contains(@href,"/s/")]/@href').extract():
             products = next_page.split("/")[-1].replace(product_set[0], '')
             product_set.append(products.replace('_', ''))
         #print(product_set)
