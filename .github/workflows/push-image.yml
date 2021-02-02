@@ -1,0 +1,42 @@
+name: Build scrapy base image
+on:
+  push:
+    branches:
+      - githubactions
+      - master
+env:
+  SERVICE_SCRAPY_DOCKER_REPO_NAME: "asimy7/scrapy"
+  SERVICE_SCRAPY_DOCKER_TAG: "1.0.1"
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: scrapy tag
+        run: |
+          export SCRAPY_TAG="${SERVICE_SCRAPY_DOCKER_REPO_NAME}:${SERVICE_SCRAPY_DOCKER_TAG}"
+          echo "Scrapy tag: ${SCRAPY_TAG}"
+          echo "SCRAPY_TAG=$SCRAPY_TAG" >> $GITHUB_ENV
+          GIT_BRANCH=${GITHUB_REF##*/}
+          echo "GIT_BRANCH=$GIT_BRANCH" >> $GITHUB_ENV
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ env.SCRAPY_TAG }}
+            ${{ env.SERVICE_SCRAPY_DOCKER_REPO_NAME }}
