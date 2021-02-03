@@ -7,7 +7,7 @@ if [[ -z $MAILFROM ]] || [[ -z $SMTP_HOST ]] || [[ -z SMTP_PORT ]] || [[ -z $SMT
        export SEND_EMAIL=1
 fi
 
-if [[ -n $HOSTNAME ]] && [[ -n $IP ]]; then                       # Loadbalancer IP + Hostname, set in host file in order not to go trough akamai
+if [[ -n $HOSTNAME ]] && [[ -n $IP ]]; then                       # Loadbalancer IP + Hostname, set in host file
    echo "$IP $HOSTNAME" >> /etc/hosts
 fi
 
@@ -60,7 +60,6 @@ else
    export RUN_PEAK_AI_COMPONENTS="no";
 fi
 
-export RUN_PEAK_AI_COMPONENTS="${RUN_PEAK_AI_COMPONENTS:-no}"
 export RUN_SHOP="${RUN_SHOP:-no}"
 export DEBUG_LEVEL="${DEBUG_LEVEL:-DEBUG}"
 python3 /scraper.py

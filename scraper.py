@@ -93,40 +93,32 @@ class Scraper(scrapy.Spider):
         for next_page in response.xpath('//div[@class="shop-products"]/div/div/@data-url').extract():
             yield response.follow(next_page, self.parse_product, 'GET',
                                     headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+            if x_run_peak_ai_components == "yes":
+                print('RUN_PEAK_AI_COMPONENTS: ' + x_run_peak_ai_components )
+                    next_page_peak = next_page.replace("/p/", peak_ai + "/p/")
+                    yield response.follow(next_page_peak, self.parse_product, 'GET',
+                                            headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})                                    
         for next_page in response.xpath('//a[@class="icon-angle-right"]/@href').extract():
             print('Next Page:', next_page)
             yield response.follow(next_page, self.parse_subcategory, 'GET',
                                     headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-        if x_run_peak_ai_components == "yes":
-            print('RUN_PEAK_AI_COMPONENTS: ' + x_run_peak_ai_components )
-            for next_page in response.xpath('//div[@class="shop-products"]/div/div/@data-url').extract():
-                next_page = next_page.replace("/p/", peak_ai + "/p/")
-                yield response.follow(next_page, self.parse_product, 'GET',
-                                        headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})
-            for next_page in response.xpath('//a[@class="icon-angle-right"]/@href').extract():
-                print('Next Page:', next_page)
-                yield response.follow(next_page, self.parse_subcategory, 'GET',
-                                        headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})
+
 
     def parse_product (self, response):
         print('Processing product content for ' + response.url + '....')
         for next_page in response.xpath('//tr[@class="basic-info"]/td/a/@href').extract():
             yield response.follow(next_page, self.parse_item, 'GET',
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+            if x_run_peak_ai_components == "yes":
+                print('RUN_PEAK_AI_COMPONENTS:' + x_run_peak_ai_components)
+                    next_page_peak = next_page.replace("/p/", peak_ai + "/p/")
+                    yield response.follow(next_page_peak, self.parse_item, 'GET',
+                                        headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})                                
         for next_page in response.xpath('//a[@class="icon-angle-right"]/@href').extract():
             print('Next Page:', next_page)
             yield response.follow(next_page, self.parse_product, 'GET',
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
-        if x_run_peak_ai_components == "yes":
-            print('RUN_PEAK_AI_COMPONENTS:' + x_run_peak_ai_components)
-            for next_page in response.xpath('//tr[@class="basic-info"]/td/a/@href').extract():
-                next_page = next_page.replace("/p/", peak_ai + "/p/")
-                yield response.follow(next_page, self.parse_item, 'GET',
-                                    headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})
-            for next_page in response.xpath('//a[@class="icon-angle-right"]/@href').extract():
-                print('Next Page:', next_page)
-                yield response.follow(next_page, self.parse_product, 'GET',
-                                    headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})
+
 
     def parse_item (self, response):
         print('Processing item content for ' + response.url + '....')
@@ -215,7 +207,7 @@ class Scraper(scrapy.Spider):
             yield response.follow(next_page, self.parse_shop_10, 'GET',
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
         yield response.follow(response.url, self.parse_shop_10, 'GET',
-                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
+                                headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
 
     def parse_shop_10 (self, response):
         print('Processing shop page level 10 for ' + response.url + '....')
