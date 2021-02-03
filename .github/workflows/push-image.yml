@@ -4,7 +4,6 @@ on:
     branches:
       - githubactions
       - master
-      - ESDT-10870
 env:
   SERVICE_SCRAPY_DOCKER_REPO_NAME: "asimy7/scrapy"
   SERVICE_SCRAPY_DOCKER_TAG: "1.0.1"
