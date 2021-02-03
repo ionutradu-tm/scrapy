@@ -95,9 +95,9 @@ class Scraper(scrapy.Spider):
                                     headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
             if x_run_peak_ai_components == "yes":
                 print('RUN_PEAK_AI_COMPONENTS: ' + x_run_peak_ai_components )
-                    next_page_peak = next_page.replace("/p/", peak_ai + "/p/")
-                    yield response.follow(next_page_peak, self.parse_product, 'GET',
-                                            headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})                                    
+                next_page_peak = next_page.replace("/p/", peak_ai + "/p/")
+                yield response.follow(next_page_peak, self.parse_product, 'GET',
+                                        headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})                                    
         for next_page in response.xpath('//a[@class="icon-angle-right"]/@href').extract():
             print('Next Page:', next_page)
             yield response.follow(next_page, self.parse_subcategory, 'GET',
@@ -111,9 +111,9 @@ class Scraper(scrapy.Spider):
                                 headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val})
             if x_run_peak_ai_components == "yes":
                 print('RUN_PEAK_AI_COMPONENTS:' + x_run_peak_ai_components)
-                    next_page_peak = next_page.replace("/p/", peak_ai + "/p/")
-                    yield response.follow(next_page_peak, self.parse_item, 'GET',
-                                        headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})                                
+                next_page_peak = next_page.replace("/p/", peak_ai + "/p/")
+                yield response.follow(next_page_peak, self.parse_item, 'GET',
+                                    headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})                                
         for next_page in response.xpath('//a[@class="icon-angle-right"]/@href').extract():
             print('Next Page:', next_page)
             yield response.follow(next_page, self.parse_product, 'GET',
