@@ -6,7 +6,7 @@ on:
       - master
 env:
   SERVICE_SCRAPY_DOCKER_REPO_NAME: "asimy7/scrapy"
-  SERVICE_SCRAPY_DOCKER_TAG: "1.0.1"
+  SERVICE_SCRAPY_DOCKER_TAG: "1.0.2"
 
 jobs:
   build-push:
