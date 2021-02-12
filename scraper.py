@@ -1,6 +1,7 @@
 import scrapy
 import sys
 import os
+import re
 import pprint
 import smtplib
 from email.message import EmailMessage
@@ -51,6 +52,7 @@ class Scraper(scrapy.Spider):
         "LOG_LEVEL": x_debug_level,
     }
     start_urls = x_start_urls
+    processed_product_set_url = "variable_initialization"
 
     def start_requests(self):
         for url in self.start_urls:
@@ -97,7 +99,15 @@ class Scraper(scrapy.Spider):
             if x_run_peak_ai_components == "yes":
                 next_page_peak = next_page.replace("/p/", peak_ai + "/p/")
                 yield response.follow(next_page_peak, self.parse_product, 'GET',
-                                        headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})                                    
+                                        headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})
+        for product_set_filter in response.xpath('//ul[@facet-name="Product Set"]/li/input/@checked').extract():
+            if (x_run_peak_ai_components == "yes") and (response.url != "(.*)\/s\/(.*)_(.*)") and (product_set_filter == "checked"):
+                product_set_url = response.url
+                if product_set_url != self.processed_product_set_url:
+                    self.processed_product_set_url = product_set_url
+                    next_page_peak_filter = re.sub("(.*)\/s\/", peak_ai + "/s/", self.processed_product_set_url)
+                    yield response.follow(next_page_peak_filter, self.parse_product, 'GET',
+                                          headers={'Authorization': basic_auth, 'X-CACHE-UPDATER': x_cache_updater_val_all})        
         for next_page in response.xpath('//a[@class="icon-angle-right"]/@href').extract():
             print('Next Page:', next_page)
             yield response.follow(next_page, self.parse_subcategory, 'GET',
