@@ -49,7 +49,7 @@ if [[ -z $CLOSESPIDER_TIMEOUT ]]; then                            # Timeout of t
 fi
 
 if [[ -z $PEAK_AI_DAY ]]; then                                    # Day of the week when the warmup for PEAK_AI_COMPONENTS will run
-   PEAK_AI_DAY="2";
+   PEAK_AI_DAY="3";
 fi
 
 day=$(date +%u)                                                   # Current day
