@@ -1,4 +1,4 @@
-FROM python:3.7.2-alpine
+FROM python:3.13.0a4-alpine
 
 RUN apk -U add \
         gcc \
